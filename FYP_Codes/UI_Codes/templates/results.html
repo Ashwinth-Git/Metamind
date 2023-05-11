@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bit Cipher - Prediction Results</title>
+  </head>
+  <body>
+    <header>
+      <h1>Bit Cipher</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/prediction">Prediction</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h2>Prediction Results</h2>
+        <p>The predicted bitcoin prices for the next hour are:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Predicted Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for result in results %}
+            <tr>
+              <td>{{ result[0] }}</td>
+              <td>{{ result[1] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 Bit Cipher</p>
+    </footer>
+  </body>
+</html>

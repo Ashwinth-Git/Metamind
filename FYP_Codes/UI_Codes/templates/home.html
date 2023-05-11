@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MetaMind</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/5/zephyr/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .navbar-brand {
+          font-size: 2em;
+        }
+
+        #slogan{
+            font-size: 20px;
+        }
+
+        #image{
+            font-weight: bolder;
+        }
+    </style>
+      
+  </head>
+    <body>
+        <!-- Header section -->
+        <nav class="bg-dark text-center text-white py-3">
+            <a class="navbar-brand" href="#">MetaMind</a>
+        </nav>
+
+        <!-- About section -->
+        <div class="container my-5">
+        <h2 class="text-center">Welcome to MetaMind!</h2>
+        <br>
+        <p id="slogan"><b><i>"MetaMind - empowering investors and traders with highly accurate cryptocurrency price predictions based on deep learning models and social media sentiment data."</i></b></p>
+        <ul>
+            <li>A Cryptocurrency price prediction application which predicts the price of Bitcoin 1 hour into the future</li>
+            <li>Uses deep learning models to predict Cryptocurrency prices based on social media sentiment and historical Bitcoin data</li>
+            <li>Tested to provide highly accurate predictions</li>
+        </ul>
+        </div>
+
+        <!-- Usecases section -->
+        <div class="container my-5">
+        <h2 >Use cases</h2>
+        <br>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card mb-3">
+                    <h3 class="card-header">Crypto Price Prediction for Traders</h3>
+                    <div class="card-body">
+                      <h5 class="card-title">Accurately predict cryptocurrency prices</h5>
+                    </div>
+                    <img src="/static/Usecase1.png" alt="Use case 1" style="width: 100%; height: 300px;">
+                    <div class="card-body">
+                      <p class="card-text">Help traders predict Cryptocurrency prices and make informed decisions to yield maximum profit and avoid losses</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3">
+                    <h3 class="card-header">Cryptocurrency Trend Analysis</h3>
+                    <div class="card-body">
+                      <h5 class="card-title"> Stay ahead of the market with our advanced price prediction algorithm</h5>
+                    </div>
+                    <img src="/static/Usecase2.png" alt="Use case 2" style="width: 100%; height: 300px;">
+                    <div class="card-body">
+                      <p class="card-text">Assist investors in analyzing and predicting future Cryptocurrency trends that can help them stay ahead in the market</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3">
+                    <h3 class="card-header">Risk Management and Portfolio Optimization</h3>
+                    <div class="card-body">
+                      <h5 class="card-title">Gain insights and protect your assets with our innovative tool</h5>
+                    </div>
+                    <img src="/static/Usecase3.png" alt="Use case 3" style="width: 100%; height: 275px;">
+                    <div class="card-body">
+                      <p class="card-text">Provide financial institutions with a tool to manage risk and optimize their portfolios to protect their assets and make informed decisions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        </div>
+
+        <!-- How to use section -->
+        <div class="container my-5">
+        <h2>How to use MetaMind</h2>
+        <br>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Upload a CSV file with the following columns: timestamp, pos, neg, neu, close, volume
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Click the "Predict" button to generate Cryptocurrency price predictions
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                After the the predictions are generated you will be redirected to the predictions page
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                View the results on the predictions page
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                To make new predictions using a different file come back to the main page and repeat the process
+            </li>
+        </ul>
+        </div>
+
+        <!-- Upload section -->
+        <div class="col-md-4 container my-5">
+            <div class="card border-dark">
+                <div class="card-header "><h2>Predict Cryptocurrency prices</h2></div>
+                <div class="card-body" class="text-center" style="padding: 5%;">
+                    <form method="POST" enctype="multipart/form-data" action="/predict">
+                        <div class="form-group">
+                            <label for="csv_file">Upload CSV file:</label>
+                            <input type="file" class="form-control-file" id="csv_file" name="file" accept=".csv">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" onclick="handleFileUpload()" class="btn btn-primary">Predict</button>
+                        </div>
+                    </form>
+                    <div id="loading" style="display:none;">
+                        <div class="spinner-border" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Footer -->
+        <footer class="bg-dark text-center text-white py-3">
+            <small>&copy; MetaMind 2023</small>
+        </footer>
+    </body>
+    <!-- Scripts -->
+    <script>
+        // Show loading animation when form is submitted
+        document.querySelector('form').addEventListener('submit', function() {
+        document.querySelector('#loading').style.display = 'block';
+        });
+
+        function handleFileUpload() {
+        const fileInput = document.getElementById("inputFile");
+        const file = fileInput.files[0];
+        if (!file) {
+          const errorMessage = document.getElementById("errorMessage");
+          errorMessage.innerHTML = "Please select a file to upload.";
+          return;
+        }
+        // continue with file processing logic here
+        console.log("File uploaded:", file.name);
+        }
+    </script>
+  
+
+
+
